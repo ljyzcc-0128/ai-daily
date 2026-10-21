@@ -58,8 +58,9 @@ def fetch_entries(hours=24):
 def summarize(items):
     api_key = os.environ["LLM_API_KEY"]
     # 用 or 兜底：GitHub Actions 中未配置的 secret 会注入空字符串而非未设置
-    base_url = os.environ.get("LLM_BASE_URL") or "https://api.deepseek.com/v1"
-    model = os.environ.get("LLM_MODEL") or "deepseek-chat"
+    # 默认智谱免费模型 glm-4-flash-250414，换模型只需配 LLM_MODEL（如 glm-5）
+    base_url = os.environ.get("LLM_BASE_URL") or "https://open.bigmodel.cn/api/paas/v4"
+    model = os.environ.get("LLM_MODEL") or "glm-4-flash-250414"
     raw = "\n".join(
         f"- [{i['source']}] {i['title']} | {i['summary']} | {i['link']}"
         for i in items
